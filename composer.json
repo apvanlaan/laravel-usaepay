@@ -1,0 +1,51 @@
+{
+    "name": "apvanlaan/usaepay",
+    "description": ":package_description",
+    "license": "license",
+    "authors": [
+        {
+            "name": "Aaron VanLaan",
+            "email": "apvanlaan@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/apvanlaan/usaepay",
+    "keywords": ["Laravel", "UsaEpay"],
+    "require": {
+        "illuminate/support": "~5|~6|~7",
+        "usaepay/usaepay-php": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "mockery/mockery": "^1.1",
+        "orchestra/testbench": "~3|~4",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Apvanlaan\\UsaEpay\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Apvanlaan\\UsaEpay\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Apvanlaan\\UsaEpay\\UsaEpayServiceProvider"
+            ],
+            "aliases": {
+                "EpayCustomer": "Apvanlaan\\UsaEpay\\Facades\\EpayCustomer",
+                "EpayAmountDetail": "Apvanlaan\\UsaEpay\\Facades\\EpayAmountDetail",
+                "EpayCreditCard": "Apvanlaan\\UsaEpay\\Facades\\EpayCreditCard",
+                "EpayCustomerAddress": "Apvanlaan\\UsaEpay\\Facades\\EpayCustomerAddress",
+                "EpayCustomField": "Apvanlaan\\UsaEpay\\Facades\\EpayCustomField",
+                "EpayLineItem": "Apvanlaan\\UsaEpay\\Facades\\EpayLineItem",
+                "EpayTrait": "Apvanlaan\\UsaEpay\\Facades\\EpayTrait",
+                "EpayTransaction": "Apvanlaan\\UsaEpay\\Facades\\EpayTransaction"
+
+            }
+        }
+    }
+}
