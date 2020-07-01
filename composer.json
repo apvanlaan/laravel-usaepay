@@ -1,6 +1,6 @@
 {
     "name": "apvanlaan/usaepay",
-    "description": ":package_description",
+    "description": "Allows easy connection with and use of USAePay's REST API with Laravel",
     "license": "license",
     "authors": [
         {
@@ -9,7 +9,7 @@
         }
     ],
     "homepage": "https://github.com/apvanlaan/usaepay",
-    "keywords": ["Laravel", "UsaEpay"],
+    "keywords": ["Laravel", "USAePay"],
     "require": {
         "illuminate/support": "~5|~6|~7",
         "usaepay/usaepay-php": "^2.0"
@@ -43,7 +43,10 @@
                 "EpayCustomField": "Apvanlaan\\UsaEpay\\Facades\\EpayCustomField",
                 "EpayLineItem": "Apvanlaan\\UsaEpay\\Facades\\EpayLineItem",
                 "EpayTrait": "Apvanlaan\\UsaEpay\\Facades\\EpayTrait",
-                "EpayTransaction": "Apvanlaan\\UsaEpay\\Facades\\EpayTransaction"
+                "EpayTransaction": "Apvanlaan\\UsaEpay\\Facades\\EpayTransaction",
+                "EpayBatch": "Apvanlaan\\UsaEpay\\Facades\\EpayBatch",
+                "EpayProduct": "Apvanlaan\\UsaEpay\\Facades\\EpayProduct",
+                "EpayCategory": "Apvanlaan\\UsaEpay\\Facades\\EpayCategory"
 
             }
         }
