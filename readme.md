@@ -1,11 +1,9 @@
-# UsaEpay
+# USAePay Rest API for Laravel
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
-[![Total Downloads][ico-downloads]][link-downloads]
 [![Build Status][ico-travis]][link-travis]
-[![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+Project was created by, and is maintained by [Aaron VanLaan][link-author].
 
 ## Installation
 
@@ -37,7 +35,7 @@ If you discover any security related issues, please email author email instead o
 
 ## Credits
 
-- [author name][link-author]
+- [Aaron VanLaan][link-author]
 - [All Contributors][link-contributors]
 
 ## License
