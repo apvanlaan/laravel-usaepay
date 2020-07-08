@@ -51,7 +51,7 @@ class EpayCustomer extends Epay
         	$res = $this->epay->get("/customers/" . $customer->custkey,$customer);
         	return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     }
     /**
@@ -74,7 +74,7 @@ class EpayCustomer extends Epay
         	
         	return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     }
     /**
@@ -91,7 +91,7 @@ class EpayCustomer extends Epay
 
             return $res;    
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
         
     }
@@ -109,7 +109,7 @@ class EpayCustomer extends Epay
             $res = $this->epay->delete("/customers/" . $customer->custkey,$customer);
             return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     	
     }

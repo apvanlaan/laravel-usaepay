@@ -7,8 +7,6 @@ use Apvanlaan\UsaEpay\Http\Controllers\BatchController;
 use Apvanlaan\UsaEpay\Http\Controllers\ProductController;
 use Apvanlaan\UsaEpay\Http\Controllers\CategoryController;
 
-Route::get('/',[TransactionController::class,'showForms'])->name('transaction.showForms');
-
 Route::group(['prefix' => 'api', 'middleware' => 'api'], function() {
 
 	// Customers
@@ -20,6 +18,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'api'], function() {
 
 	// Transactions
 	Route::post('/epay/transaction/get',[TransactionController::class,'get'])->name('transaction.get');
+	Route::get('/epay/transaction/list',[TransactionController::class,'listAuths'])->name('transaction.listAuths');
 	Route::post('/epay/transaction/capture',[TransactionController::class,'capture'])->name('transaction.capture');
 	Route::post('/epay/transaction/auth',[TransactionController::class,'auth'])->name('transaction.auth');
 	Route::post('/epay/transaction/void',[TransactionController::class,'void'])->name('transaction.void');

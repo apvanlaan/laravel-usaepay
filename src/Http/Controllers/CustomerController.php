@@ -12,8 +12,7 @@ class CustomerController extends Controller
 
 	public function __construct(Request $request){
 		$arr = $request->all();
-		$epayc = new EpayCustomer();
-		$this->customer = $epayc->new($arr);
+		$this->customer = new EpayCustomer($arr);
 	}
 	public function createCustomer(Request $request){
 			
@@ -39,7 +38,7 @@ class CustomerController extends Controller
 	public function getCustomer(Request $request){
 		
 		$res = $this->customer->getCustomer();
-		return json_encode($res);
+		return $res;
 	}
 	/**
 	 * [updateCustomer description]

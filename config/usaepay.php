@@ -2,10 +2,10 @@
 
 return [
     'apikey' => env('EPAYAPI'),
-    'pin' => env('EPAYPIN'),
     'publickey'=> env('EPAYPUBLIC'),
-    'epaysub' => env('EPAY_SUB'),
-    'endpoint' => env('EPAY_ENDPOINT'),
+    'pin' => env('EPAYPIN',''),
+    'epaysub' => env('EPAY_SUB','sandbox'),
+    'endpoint' => env('EPAY_ENDPOINT','v2'),
     'capture_type'=>'reauth' // {'','error','reauth','override'}
 
 ];
