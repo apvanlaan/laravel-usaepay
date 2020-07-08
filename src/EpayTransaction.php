@@ -5,9 +5,7 @@ use Apvanlaan\UsaEpay\Epay;
 
 class EpayTransaction extends Epay
 {
-    /**
-     * @var $command String
-     */
+   
     public String $command;
     public String $trankey;
     public String $refnum;
@@ -17,7 +15,6 @@ class EpayTransaction extends Epay
     public String $description;
     public String $comments;
     public String $email;
-    public Boolean $send_receipt;
     public String $merchemailaddr;
     public Float $amount;
 
@@ -25,15 +22,15 @@ class EpayTransaction extends Epay
 
     public Transactions\EpayCreditCard $creditcard;
 
-    public Boolean $save_card;
+    public Bool $save_card;
 
     public Transactions\EpayTrait $traits;
 
     public String $custkey;
 
-    public Boolean $save_customer;
+    public Bool $save_customer;
 
-    public Boolean $save_customer_paymethod;
+    public Bool $save_customer_paymethod;
 
     public Transactions\EpayCustomerAddress $billing_address;
     public Transactions\EpayCustomerAddress $shipping_address;
@@ -46,22 +43,27 @@ class EpayTransaction extends Epay
     public String $terminal;
     public String $clerk;
     public String $clientip;
-
     public String $software;
     
+    public function listAuthorized(){
+        $transaction = $this;
+        $res = $this->epay->get("/transactions",$transaction);
+        return $res;
+        // https://secure.usaepay.com/api/v2/transactions?filters=@trantype_code
+    }
     public function getTransaction(){
-        $required = ['transaction_key'];
+        $required = ['trankey'];
 
         $validated = $this->validate($required);
         
-        if($validated){
-            $key = $this->transaction_key;
+        if($validated === true){
+            $key = $this->trankey;
             $transaction = $this;
             
             $res = $this->epay->get("/transactions/$key",$transaction);
             return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
         
 
@@ -74,12 +76,12 @@ class EpayTransaction extends Epay
         $required = $this->setRequired(['amount'],['payment_key'=>'creditcard']);
         $validated = $this->validate($required);
 
-        if($validated){
+        if($validated === true){
             $transaction = $this;
             $res = $this->epay->post("/transactions",$transaction);
             return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     }
 
@@ -91,27 +93,27 @@ class EpayTransaction extends Epay
             array_push($required,'creditcard');
         }
         $validated = $this->validate($required);
-        if($validated){
+        if($validated === true){
             $transaction = $this;
             $res = $this->epay->post("/transactions",$transaction);
             return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     }
 
 
     public function createVoid(){
-        $required = $this->setRequire([],['trankey'=>'refnum','refnum'=>'trankey']);
+        $required = $this->setRequired([],['trankey'=>'refnum','refnum'=>'trankey']);
         $this->command = 'void';
         
         $validated = $this->validate($required);
-        if($validated){
+        if($validated === true){
             $transaction = $this;
             $res = $this->epay->post("/transactions",$transaction);
             return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     }
 
@@ -121,26 +123,28 @@ class EpayTransaction extends Epay
         
         $validated = $this->validate($required);
         
-        if($validated){
+        if($validated === true){
             $transaction = $this;
+            
             $res = $this->epay->post("/transactions",$transaction);
             return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     }
 
     public function captureTransaction(){
         $this->command = "cc:capture:" . config('usaepay.capture_type');
-        $required = $this->setRequire([],['trankey'=>'refnum','refnum'=>'trankey']);
+        $required = $this->setRequired([],['trankey'=>'refnum','refnum'=>'trankey']);
         $validated = $this->validate($required);
         
-        if($validated){
+        if($validated === true){
             $transaction = $this;
+
             $res = $this->epay->post("/transactions",$transaction);
             return $res;
         }else{
-            return "validation error";
+            throw new \Exception($validated,444);
         }
     }
 

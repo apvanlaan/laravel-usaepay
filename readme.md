@@ -58,31 +58,11 @@ EPAYPUBLIC=
 EPAY_SUB=sandbox (change to secure for production)
 #EPAY_ENDPOINT= (optional, use if using a custom endpoint, otherwise defaults to v2)
 ```
+
 <a name="epaycustomer-class"></a>
 ## EpayCustomer Class
 
 The EpayCustomer Class handles the creation of the Customer object and the associated api calls.
-
-<a name="epaycustomer-class-example"></a>
-### Example 
-#### (note: there are two ways to instantiate the epay classes, you can pass an array/object with the paramters or you can instantiate an empty class and manually set the parameters as needed.  Both will not always be shown in the subsequent examples.)
-
-```php
-$params = ['custkey'=>'asdf'];
-$customer = new EpayCustomer($params);
-
-return $customer->getCustomer();
-```
-OR
-```php
-$customer = new EpayCustomer();
-$customer->custkey = 'asdf';
-
-return $customer->getCustomer();
-```
-#### getCustomer()
-
-In both the examples above, the EpayCustomer object is created and the Customer Key (custkey) parameter is set.  With that set, the getCustomer method can be called, returning the customer object from USAePay;
 
 <a name="epaycustomer-class-parameters"></a>
 ### Parameters
@@ -108,22 +88,66 @@ EpayCustomer parameters are:
 * `description` String
 * `custkey` String
  
-### EpayCustomer Methods w/ default required params
+<a name="epaycustomer-class-example"></a>
 
-#### 	listcustomers()
-* Required : `none`
+### EpayCustomer Methods w/ default required params and Examples
+#### (note: there are two ways to instantiate the epay classes, you can pass an array/object with the paramters or you can instantiate an empty class and manually set the parameters as needed.)
 
 #### 	getCustomer()
+* Route : ` GET epay/customer/get/{custkey}`
 * Required : `custkey`
+
+```php
+$customer = new EpayCustomer();
+$customer->custkey = $custkey;
+
+return $customer->getCustomer();
+```
+
+#### 	listCustomers()
+* Route : `GET epay/customer/list`
+* Required : `none`
+
+```php
+$customer = new EpayCustomer();
+
+return $customer->listCustomers();
+```
 
 #### 	addCustomer()
+* Route : `POST epay/customer/create`
 * Required : `company (if no first_name && last_name), first_name (if no company), last_name (if no company)`
 
+```php
+$customer = new EpayCustomer();
+$params = ['first_name' =>"John",'last_name' =>"Doe",'street' =>"123 House Rd",'city' =>"Beverly Hills",'state' =>"CA",'postalcode' =>"90210",'country' =>"USA",'phone' =>"5558675309",'email' =>"john.doe@email.com",'description' =>"Fake customer information for testing."];
+return $customer->addCustomer($params);
+```
+
 #### 	updateCustomer()
+* Route : `POST epay/customer/update`
 * Required : `custkey`
 
+```php
+$customerUpdate = new \StdClass();
+$customerUpdate->custkey = "asdf";
+$customerUpdate->description = 'Still a fake customer used for testing';
+
+$customer = new EpayCustomer($params);
+
+return $customer->updateCustomer();
+```
+
 #### 	deleteCustomer()
+* Route : `POST epay/customer/delete`
 * Required : `custkey`
+
+```php
+$params = ['custkey'=>$request->custkey];
+$customer = new EpayCustomer($params);
+
+return $customer->deleteCustomer();
+```
 
 <a name="epaytransaction-class"></a>
 ## EpayTransaction Class
@@ -155,7 +179,6 @@ try {
 
 EpayTransaction parameters are:
 
-* `command` String - The Transaction command, required for all except get/list
 * `trankey` String - required on get, required on authorize/capture if refnum is not present
 * `refnum` String - required on authorize/capture if trankey is not present
 * `invoice` String
@@ -183,13 +206,42 @@ EpayTransaction parameters are:
 * `clientip` String 
 * `software` String 
 
+### EpayTransaction Methods w/ default required params
+
+#### 	listAuthorized()
+* Route : `GET epay/transaction/list`
+* Required : `none`
+
+#### 	listAuthorized()
+* Route : `GET epay/transaction/list`
+* Required : `trankey`
+
+#### 	createSale()
+* Route : `POST epay/transaction/sale`
+* Required : `amount, payment_key (if no creditcard), creditcard (if no payment_key)`
+
+#### 	createRefund()
+* Required : `amount, creditcard`
+
+#### 	createVoid()
+* Route : `POST epay/transaction/void`
+* Required : `trankey (if no refnum), refnum (if no trankey)`
+
+#### 	authorizeTransaction()
+* Route : `POST epay/transaction/auth`
+* Required : `amount, payment_key (if no creditcard), creditcard (if no payment_key)`
+
+#### 	captureTransaction()
+* Route : `POST epay/transaction/capture`
+* Required : `trankey (if no refnum), refnum (if no trankey)`
+
 <a name="epaybatch-class"></a>
 ## EpayBatch Class
 
 The EpayBatch Class allow you to track a shipment using the UPS EpayBatch API.
 
 <a name="epaybatch-class-example"></a>
-### Example using EpayBatch Number / Mail Innovations tracking number
+### Example using EpayBatch 
 
 ```php
 $tracking = new Ups\Tracking($accessKey, $userId, $password);

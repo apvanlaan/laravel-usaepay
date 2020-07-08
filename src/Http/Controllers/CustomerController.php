@@ -35,8 +35,8 @@ class CustomerController extends Controller
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function getCustomer(Request $request){
-		
+	public function getCustomer($custkey){
+		$this->customer->custkey = $custkey;
 		$res = $this->customer->getCustomer();
 		return $res;
 	}

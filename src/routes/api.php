@@ -11,13 +11,13 @@ Route::group(['prefix' => 'api', 'middleware' => 'api'], function() {
 
 	// Customers
 	Route::post('/epay/customer/create',[CustomerController::class,'createCustomer'])->name('customer.create');
-	Route::post('/epay/customer/get',[CustomerController::class,'getCustomer'])->name('customer.get');
+	Route::get('/epay/customer/get/{custkey}',[CustomerController::class,'getCustomer'])->name('customer.get');
 	Route::get('/epay/customer/list',[CustomerController::class,'listCustomers'])->name('customer.list');
 	Route::post('/epay/customer/update',[CustomerController::class,'updateCustomer'])->name('customer.update');
 	Route::post('/epay/customer/delete',[CustomerController::class,'deleteCustomer'])->name('customer.delete');
 
 	// Transactions
-	Route::post('/epay/transaction/get',[TransactionController::class,'get'])->name('transaction.get');
+	Route::get('/epay/transaction/get/{trankey}',[TransactionController::class,'get'])->name('transaction.get');
 	Route::get('/epay/transaction/list',[TransactionController::class,'listAuths'])->name('transaction.listAuths');
 	Route::post('/epay/transaction/capture',[TransactionController::class,'capture'])->name('transaction.capture');
 	Route::post('/epay/transaction/auth',[TransactionController::class,'auth'])->name('transaction.auth');

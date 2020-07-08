@@ -9,10 +9,10 @@ class EpayLineItem extends Epay
  	public String $product_key;
  	public String $name;
  	public Double $cost;
- 	public Integer $qty;
+ 	public Int $qty;
  	public String $description;
  	public String $sku;
- 	public Boolean $taxable;
+ 	public Bool $taxable;
  	public Double $tax_amount;
  	public String $tax_rate;
  	public String $discount_rate;

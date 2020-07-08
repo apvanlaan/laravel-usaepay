@@ -7,10 +7,10 @@ class EpayAmountDetail extends Epay
 {
     public Double $subtotal;
     public Double $tax;
-    public Boolean $nontaxable;
+    public Bool $nontaxable;
     public Double $tip;
     public Double $discount;
     public Double $shipping;
     public Double $duty;
-    public Boolean $enable_partialauth;    
+    public Bool $enable_partialauth;    
 }

@@ -5,11 +5,11 @@ use Apvanlaan\UsaEpay\Epay;
 
 class EpayTrait extends Epay
 {
-    public Boolean $is_debt;
-    public Boolean $is_bill_pay;
-    public Boolean $is_recurring;
-    public Boolean $is_healthcare;
-    public Boolean $is_cash_advance;
-    public Integer $secure_collection;
+    public Bool $is_debt;
+    public Bool $is_bill_pay;
+    public Bool $is_recurring;
+    public Bool $is_healthcare;
+    public Bool $is_cash_advance;
+    public Int $secure_collection;
     
 }
