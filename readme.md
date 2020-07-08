@@ -108,22 +108,22 @@ EpayCustomer parameters are:
 * `description` String
 * `custkey` String
  
-### EpayCustomer Methods
+### EpayCustomer Methods w/ default required params
 
 #### 	listcustomers()
-##### 	Required : none
+* Required : `none`
 
 #### 	getCustomer()
-##### 	Required : custkey
+* Required : `custkey`
 
 #### 	addCustomer()
-##### 	Required : company (if no first_name && last_name), first_name (if no company), last_name (if no company)
+* Required : `company (if no first_name && last_name), first_name (if no company), last_name (if no company)`
 
 #### 	updateCustomer()
-##### 	Required : custkey
+* Required : `custkey`
 
 #### 	deleteCustomer()
-##### 	Required : custkey
+* Required : `custkey`
 
 <a name="epaytransaction-class"></a>
 ## EpayTransaction Class
