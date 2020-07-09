@@ -8,9 +8,9 @@ class EpayProduct extends Epay
     
     public String $name;
     public Float $price;
-    public Boolean $enabled;
-    public Boolean $taxable;
-    public Boolean $available_all;
+    public Bool $enabled;
+    public Bool $taxable;
+    public Bool $available_all;
     public String $available_all_date;
     public Int $categoryid;
     public String $commodity_code;
@@ -22,7 +22,7 @@ class EpayProduct extends Epay
     public String $merch_productid;
     public Int $min_quantity;
     public String $model;
-    public Boolean $physicalgood;
+    public Bool $physicalgood;
     public Int $weight;
     public Int $ship_weight;
     public String $sku;
@@ -30,7 +30,7 @@ class EpayProduct extends Epay
     public String $um;
     public String $upc;
     public String $url;
-    public Boolean $allow_override;
+    public Bool $allow_override;
     public String $product_key;
     public Int $limit;
     public Int $offset;

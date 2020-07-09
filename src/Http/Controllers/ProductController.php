@@ -12,8 +12,7 @@ class ProductController extends Controller
 
 	public function __construct(Request $request){
 		$arr = $request->all();
-		$epayc = new EpayProduct();
-		$this->product = $epayc->new($arr);
+		$this->product = new EpayProduct($arr);
 	}
 	public function create(Request $request){
 			
@@ -36,8 +35,8 @@ class ProductController extends Controller
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function get(Request $request){
-		
+	public function get($productkey){
+		$this->product_key = $productkey;
 		$res = $this->product->getProduct();
 		return $res;
 	}

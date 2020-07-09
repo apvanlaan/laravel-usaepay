@@ -20,41 +20,47 @@ class BatchController extends Controller
 		if($request->offset){
 			$arr['offset'] = $arr['offset'] *1;
 		}
-		$epayb = new EpayBatch();
-		$test = $epayb->new($arr);
-		if(is_string($test)){
+		$this->batch = new EpayBatch($arr);
+		
+		if(is_string($this->batch)){
 			throw new \Exception($test);
-		}else{
-			$this->batch = $epayb->new($arr);	
 		}
 		
 	}
 	public function list(){
-		$res = $this->batch->listBatches();
-		return $res;
+	
+			$res = $this->batch->listBatches();
+			return $res;
+		
 	}
 	public function retrieve(Request $request){
-		try{
+		
 		$res = $this->batch->retrieveBatch();
 			return response($res,200);
-		}catch(\Exception $e){
-			return response($e->getMessage(),$e->getCode());
-		}
+		
 	}
 	public function current(){
-		$res = $this->batch->currentBatch();
-		return $res;
+		
+			$res = $this->batch->currentBatch();
+			return $res;
+		
 	}
 	public function currentTransactions(){
-		$res = $this->batch->getCurrentBatchTransactions();
-		return $res;
+		
+			$res = $this->batch->getCurrentBatchTransactions();
+			return $res;
+		
 	}
-	public function transactionsByBatch(Request $request){
-		$res = $this->batch->getTransactionsByBatch();
-		return $res;
+	public function transactionsByBatch($batchkey){
+			$this->batch_key = $batchkey;
+			$res = $this->batch->getTransactionsByBatch();
+			return $res;
+		
 	}
 	public function close(Request $request){
-		$res = $this->batch->closeBatch();
-		return json_encode($res);
+		
+			$res = $this->batch->closeBatch();
+			return json_encode($res);
+		
 	}
 }

@@ -12,30 +12,37 @@ Project was created by, and is maintained by [Aaron VanLaan][link-author].
 1. [Requirements](#requirements)
 2. [Installation](#installation)
 3. [EpayCustomer Class](#epaycustomer-class)
-    * [Example](#epaycustomer-class-example)
     * [Parameters](#epaycustomer-class-parameters)  
+    * [Methods](#epaycustomer-class-example)
 4. [EpayTransaction Class](#epaytransaction-class)
-    * [Example](#epaytransaction-class-example)
     * [Parameters](#epaytransaction-class-parameters)
+    * [Methods](#epaytransaction-class-example)
+    * [EpayTransaction Child Classes](#epaytransaction-class-children)
+    	* [EpayAmountDetail Class](#epayamountdetail-class-children)
+    	* [EpayCreditCard Class](#epaycreditcard-class-children)
+    	* [EpayCustomerAddress Class](#epaycustomeraddress-class-children)
+    	* [EpayCustomField Class (COMING SOON)](#epaycustomfield-class-children)
+    	* [EpayLineItem Class](#epaylineitem-class-children)
+    	* [EpayTrait Class](#epaytrait-class-children)
 5. [EpayBatch Class](#epaybatch-class)
-    * [Example](#epaybatch-class-example)
     * [Parameters](#epaybatch-class-parameters)
+    * [Methods](#epaybatch-class-example)
 6. [EpayProduct Class](#epayproduct-class)
-    * [Example](#epayproduct-class-example)
     * [Parameters](#epayproduct-class-parameters)
+    * [Methods](#epayproduct-class-example)
 7. [EpayCategory Class](#epaycategory-class)
-    * [Example](#epaycategory-class-example)
     * [Parameters](#epaycategory-class-parameters)
-8. [EpayInventory Class](#epayinventory-class)
-    * [Example](#epayinventory-class-example)
+    * [Methods](#epaycategory-class-example)
+8. [EpayInventory Class (COMING SOON)](#epayinventory-class)
     * [Parameters](#epayinventory-class-parameters)
+    * [Methods](#epayinventory-class-example)
 
 <a name="requirements"></a>
 ## Requirements
 
 This library uses PHP 7.4+ and Laravel 6+
 
-
+You can find the USAePay Rest API docs here : https://help.usaepay.info/api/rest/
 <a name="installation"></a>
 ## Installation
 
@@ -58,6 +65,8 @@ EPAYPUBLIC=
 EPAY_SUB=sandbox (change to secure for production)
 #EPAY_ENDPOINT= (optional, use if using a custom endpoint, otherwise defaults to v2)
 ```
+
+Note: In the following sections, the included routes relate to the controllers I have included in the package.  If you end up rolling your own then obviously you can ignore those.  The required fields, however, are required via the USAePay API, so those must remain. 
 
 <a name="epaycustomer-class"></a>
 ## EpayCustomer Class
@@ -154,33 +163,14 @@ return $customer->deleteCustomer();
 
 The EpayTransaction Class handles the creation of the Transaction object and the associated api calls.
 
-<a name="epaytransaction-class-example"></a>
-### Example
-
-```php
-$quantumView = new Ups\QuantumView($accessKey, $userId, $password);
-
-try {
-	// Get the subscription for all events for the last hour
-	$events = $quantumView->getSubscription(null, (time() - 3600));
-
-	foreach($events as $event) {
-		// Your code here
-		echo $event->Type;
-	}
-
-} catch (Exception $e) {
-	var_dump($e);
-}
-```
 
 <a name="epaytransaction-class-parameters"></a>
 ### Parameters
 
 EpayTransaction parameters are:
 
-* `trankey` String - required on get, required on authorize/capture if refnum is not present
-* `refnum` String - required on authorize/capture if trankey is not present
+* `trankey` String
+* `refnum` String
 * `invoice` String
 * `ponum` String
 * `orderid` String
@@ -188,7 +178,7 @@ EpayTransaction parameters are:
 * `comments` String
 * `email` String
 * `merchemailaddr` String
-* `amount` Float - required for sale/refund/authorize
+* `amount` Float
 * `amount_detail` Transactions\EpayAmountDetail
 * `creditcard` Transactions\EpayCreditCard
 * `save_card` Bool
@@ -206,6 +196,7 @@ EpayTransaction parameters are:
 * `clientip` String 
 * `software` String 
 
+<a name="epaytransaction-class-example"></a>
 ### EpayTransaction Methods w/ default required params
 
 #### 	listAuthorized()
@@ -235,296 +226,229 @@ EpayTransaction parameters are:
 * Route : `POST epay/transaction/capture`
 * Required : `trankey (if no refnum), refnum (if no trankey)`
 
+<a name="epaytransaction-class-children"></a>
+### EpayTransaction Child Classes
+
+<a name="epayamountdetail-class"></a>
+### EpayAmountDetail Class & Parameters
+* `subtotal` Double
+* `tax` Double
+* `nontaxable` Bool
+* `tip` Double
+* `discount` Double
+* `shipping` Double
+* `duty` Double
+* `enable_partialauth` Bool
+
+<a name="epaycreditcard-class"></a>
+### EpayCreditCard Class & Parameters
+* `cardholder` String
+* `number` String
+* `expiration` String
+* `cvc` Int
+* `avs_street` String
+* `avs_postalcode` String
+
+<a name="epaycustomeraddress-class"></a>
+### EpayCustomerAddress Class & Parameters
+* `company` String
+* `firstname` String
+* `lastname` String
+* `street` String
+* `street2` String
+* `city` String
+* `state` String
+* `postalcode` String
+* `country` String
+* `phone` String
+* `fax; ` String
+
+
+<a name="epaylineitem-class"></a>
+### EpayLineItem Class & Parameters
+* `product_key` String
+* `name` String
+* `cost` Double
+* `qty` Int
+* `description` String
+* `sku` String
+* `taxable` Bool
+* `tax_amount` Double
+* `tax_rate` String
+* `discount_rate` String
+* `discount_amount` Double
+* `location_key` String
+* `commodity_code` String
+
+<a name="epaytrait-class"></a>
+### EpayTrait Class & Parameters
+* `is_debt` Bool
+* `is_bill_pay` Bool
+* `is_recurring` Bool
+* `is_healthcare` Bool
+* `is_cash_advance` Bool
+* `secure_collection` Int
 <a name="epaybatch-class"></a>
 ## EpayBatch Class
 
-The EpayBatch Class allow you to track a shipment using the UPS EpayBatch API.
-
-<a name="epaybatch-class-example"></a>
-### Example using EpayBatch 
-
-```php
-$tracking = new Ups\Tracking($accessKey, $userId, $password);
-
-try {
-	$shipment = $tracking->track('TRACKING NUMBER');
-
-	foreach($shipment->Package->Activity as $activity) {
-		var_dump($activity);
-	}
-
-} catch (Exception $e) {
-	var_dump($e);
-}
-```
+The EpayBatch Class handles the creation of the Batch object and the associated api calls.
 
 <a name="epaybatch-class-parameters"></a>
 ### Parameters
 
-Tracking parameters are:
+EpayBatch parameters are:
 
- * `trackingNumber` The package’s tracking number.
- * `requestOption` Optional processing. For Mail Innovations the only valid options are Last Activity and All activity.
-
-<a name="epaybatch-class-example"></a>
-### Example using Reference Number
-
-```php
-$tracking = new Ups\Tracking($accessKey, $userId, $password);
-
-try {
-    $shipment = $tracking->trackByReference('REFERENCE NUMBER');
-
-    foreach($shipment->Package->Activity as $activity) {
-        var_dump($activity);
-    }
-
-} catch (Exception $e) {
-    var_dump($e);
-}
-```
-<a name="epaybatch-class-parameters"></a>
-### Parameters
-
-Tracking parameters are:
-
- * `referenceNumber` The ability to track any UPS package or shipment by reference number. Reference numbers can be a purchase order number, job number, etc. Reference Number is supplied when generating a shipment.
- * `requestOption` Optional processing. For Mail Innovations the only valid options are Last Activity and All activity.
+* `limit` Int 
+* `offset` Int 
+* `openedlt` String 
+* `openedgt` String 
+* `closedlt` String 
+* `closedgt` String 
+* `openedle` String 
+* `openedge` String 
+* `closedle` String 
+* `closedge` String 
+* `batch_key` String 
 
 <a name="epaybatch-class-example"></a>
-### Example using Reference Number with additional parameters
+### EpayBatch Methods w/ default required params
 
-```php
-$tracking = new Ups\Tracking($accessKey, $userId, $password);
+#### 	listBatches()
+* Route : `GET epay/batch/list`
+* Required : `none`
 
-$tracking->setShipperNumber('SHIPPER NUMBER');
+#### 	currentBatch()
+* Route : `GET epay/batch/current`
+* Required : `none`
 
-$beginDate = new \DateTime('2016-01-01');
-$endDate = new \DateTime('2016-01-31');
+#### 	retrieveBatch()
+* Route : `POST epay/batch/retrieve`
+* Required : `batch_key`
 
-$tracking->setBeginDate($beginDate);
-$tracking->setEndDate($endDate);
+#### 	getCurrentBatchTransactions()
+* Route : `GET epay/batch/currentTransactions`
+* Required : `none`
 
-try {
-    $shipment = $tracking->trackByReference('REFERENCE NUMBER');
+#### 	getTransactionsByBatch()
+* Route : `GET epay/batch/transactionsByBatch`
+* Required : `trankey (if no refnum), refnum (if no trankey)`
 
-    foreach($shipment->Package->Activity as $activity) {
-        var_dump($activity);
-    }
+#### 	closeBatch()
+* Route : `POST epay/batch/close`
+* Required : `batch_key`
 
-} catch (Exception $e) {
-    var_dump($e);
-}
-```
-
-The parameters shipperNumber, beginDate and endDate are optional. Either of the parameters can be set individually. These parameters can help to narrow the search field when tracking by reference, since it might happen that the reference number used is not unique. When using tracking by tracking number these parameters are not needed since the tracking number is unique.
 
 <a name="epayproduct-class"></a>
-## Rate Class
+## EpayProduct Class
 
-The Rate Class allow you to get shipment rates using the UPS Rate API.
+The EpayProduct Class handles the creation of the Product object and the associated api calls.
 
-<a name="epayproduct-class-example"></a>
-### Example
-
-```php
-$rate = new Ups\Rate(
-	$accessKey,
-	$userId,
-	$password
-);
-
-try {
-    $shipment = new \Ups\Entity\Shipment();
-
-    $shipperAddress = $shipment->getShipper()->getAddress();
-    $shipperAddress->setPostalCode('99205');
-
-    $address = new \Ups\Entity\Address();
-    $address->setPostalCode('99205');
-    $shipFrom = new \Ups\Entity\ShipFrom();
-    $shipFrom->setAddress($address);
-
-    $shipment->setShipFrom($shipFrom);
-
-    $shipTo = $shipment->getShipTo();
-    $shipTo->setCompanyName('Test Ship To');
-    $shipToAddress = $shipTo->getAddress();
-    $shipToAddress->setPostalCode('99205');
-
-    $package = new \Ups\Entity\Package();
-    $package->getPackagingType()->setCode(\Ups\Entity\PackagingType::PT_PACKAGE);
-    $package->getPackageWeight()->setWeight(10);
-    
-    // if you need this (depends of the shipper country)
-    $weightUnit = new \Ups\Entity\UnitOfMeasurement;
-    $weightUnit->setCode(\Ups\Entity\UnitOfMeasurement::UOM_KGS);
-    $package->getPackageWeight()->setUnitOfMeasurement($weightUnit);
-
-    $dimensions = new \Ups\Entity\Dimensions();
-    $dimensions->setHeight(10);
-    $dimensions->setWidth(10);
-    $dimensions->setLength(10);
-
-    $unit = new \Ups\Entity\UnitOfMeasurement;
-    $unit->setCode(\Ups\Entity\UnitOfMeasurement::UOM_IN);
-
-    $dimensions->setUnitOfMeasurement($unit);
-    $package->setDimensions($dimensions);
-
-    $shipment->addPackage($package);
-
-    var_dump($rate->getRate($shipment));
-} catch (Exception $e) {
-    var_dump($e);
-}
-```
 <a name="epayproduct-class-parameters"></a>
 ### Parameters
 
- * `rateRequest` Mandatory. rateRequest Object with shipment details
+* `name` String
+* `price` Float
+* `enabled` Bool
+* `taxable` Bool
+* `available_all` Bool
+* `available_all_date` String
+* `categoryid` Int
+* `commodity_code` String
+* `date_available` String
+* `description` String
+* `list_price` Float
+* `wholesale_price` Float
+* `manufacturer` String
+* `merch_productid` String
+* `min_quantity` Int
+* `model` String
+* `physicalgood` Bool
+* `weight` Int
+* `ship_weight` Int
+* `sku` String
+* `taxclass` String
+* `um` String
+* `upc` String
+* `url` String
+* `allow_override` Bool
+* `product_key` String
+* `limit` Int
+* `offset` Int
+* `inventory` Array
+* `modifiers` Array
 
-This Rate class is not finished yet! Parameter should be added when it will be finished.
+<a name="epayproduct-class-example"></a>
+### EpayProduct Methods w/ default required params
+
+#### 	listProducts()
+* Route : `GET epay/product/list`
+* Required : `none`
+
+#### 	createProduct()
+* Route : `POST epay/product/create`
+* Required : `name`
+
+#### 	getProduct()
+* Route : `GET epay/product/get`
+* Required : `product_key`
+
+#### 	updateProduct()
+* Route : `POST epay/product/update`
+* Required : `product_key`
+
+#### 	deleteProduct()
+* Route : `POST epay/product/delete`
+* Required : `product_key`
+
 
 <a name="epaycategory-class"></a>
-## RateTimeInTransit Class
+## EpayCategory Class
 
-The RateTimeInTransit Class allow you to get shipment rates like the Rate Class, but the response will also include 
-TimeInTransit data.
+The EpayCategory Class handles the creation of the Category object and the associated api calls.
 
-<a name="epaycategory-class-example"></a>
-### Example
-
-```php
-$rate = new Ups\RateTimeInTransit(
-	$accessKey,
-	$userId,
-	$password
-);
-
-try {
-    $shipment = new \Ups\Entity\Shipment();
-
-    $shipperAddress = $shipment->getShipper()->getAddress();
-    $shipperAddress->setPostalCode('99205');
-
-    $address = new \Ups\Entity\Address();
-    $address->setPostalCode('99205');
-    $shipFrom = new \Ups\Entity\ShipFrom();
-    $shipFrom->setAddress($address);
-
-    $shipment->setShipFrom($shipFrom);
-
-    $shipTo = $shipment->getShipTo();
-    $shipTo->setCompanyName('Test Ship To');
-    $shipToAddress = $shipTo->getAddress();
-    $shipToAddress->setPostalCode('99205');
-
-    $package = new \Ups\Entity\Package();
-    $package->getPackagingType()->setCode(\Ups\Entity\PackagingType::PT_PACKAGE);
-    $package->getPackageWeight()->setWeight(10);
-    
-    // if you need this (depends of the shipper country)
-    $weightUnit = new \Ups\Entity\UnitOfMeasurement;
-    $weightUnit->setCode(\Ups\Entity\UnitOfMeasurement::UOM_KGS);
-    $package->getPackageWeight()->setUnitOfMeasurement($weightUnit);
-
-    $dimensions = new \Ups\Entity\Dimensions();
-    $dimensions->setHeight(10);
-    $dimensions->setWidth(10);
-    $dimensions->setLength(10);
-
-    $unit = new \Ups\Entity\UnitOfMeasurement;
-    $unit->setCode(\Ups\Entity\UnitOfMeasurement::UOM_IN);
-
-    $dimensions->setUnitOfMeasurement($unit);
-    $package->setDimensions($dimensions);
-
-    $shipment->addPackage($package);
-
-    $deliveryTimeInformation = new \Ups\Entity\DeliveryTimeInformation();
-    $deliveryTimeInformation->setPackageBillType(\Ups\Entity\DeliveryTimeInformation::PBT_NON_DOCUMENT);
-    
-    $pickup = new \Ups\Entity\Pickup();
-    $pickup->setDate("20170520");
-    $pickup->setTime("160000");
-    $shipment->setDeliveryTimeInformation($deliveryTimeInformation);
-
-    var_dump($rate->shopRatesTimeInTransit($shipment));
-} catch (Exception $e) {
-    var_dump($e);
-}
-```
 <a name="epaycategory-class-parameters"></a>
 ### Parameters
 
- * `rateRequest` Mandatory. rateRequest Object with shipment details
+* `name` String
+* `categorykey` String
+* `limit` Int
+* `offset` Int
+* `modifiers` Array
 
-This RateTimeInTransit extends the Rate class which is not finished yet! Parameter should be added when it will be finished.
+<a name="epaycategory-class-example"></a>
+### EpayCategory Methods w/ default required params
+
+#### 	listCategories()
+* Route : `GET epay/category/list`
+* Required : `none`
+
+#### 	createCategory()
+* Route : `POST epay/category/create`
+* Required : `name`
+
+#### 	getCategory()
+* Route : `GET epay/category/get`
+* Required : `category_key`
+
+#### 	updateCategory()
+* Route : `POST epay/category/update`
+* Required : `category_key`
+
+#### 	deleteCategory()
+* Route : `POST epay/category/delete`
+* Required : `category_key`
 
 <a name="epayinventory-class"></a>
-## TimeInTransit Class
+## EpayInventory Class
 
-The TimeInTransit Class allow you to get all transit times using the UPS TimeInTransit API.
+(COMING SOON)
 
-<a name="epayinventory-class-example"></a>
-### Example
-
-```php
-$timeInTransit = new Ups\TimeInTransit($access, $userid, $passwd);
-
-try {
-    $request = new \Ups\Entity\TimeInTransitRequest;
-
-    // Addresses
-    $from = new \Ups\Entity\AddressArtifactFormat;
-    $from->setPoliticalDivision3('Amsterdam');
-    $from->setPostcodePrimaryLow('1000AA');
-    $from->setCountryCode('NL');
-    $request->setTransitFrom($from);
-
-    $to = new \Ups\Entity\AddressArtifactFormat;
-    $to->setPoliticalDivision3('Amsterdam');
-    $to->setPostcodePrimaryLow('1000AA');
-    $to->setCountryCode('NL');
-    $request->setTransitTo($to);
-
-    // Weight
-    $shipmentWeight = new \Ups\Entity\ShipmentWeight;
-    $shipmentWeight->setWeight($totalWeight);
-    $unit = new \Ups\Entity\UnitOfMeasurement;
-    $unit->setCode(\Ups\Entity\UnitOfMeasurement::UOM_KGS);
-    $shipmentWeight->setUnitOfMeasurement($unit);
-    $request->setShipmentWeight($shipmentWeight);
-
-    // Packages
-    $request->setTotalPackagesInShipment(2);
-
-    // InvoiceLines
-    $invoiceLineTotal = new \Ups\Entity\InvoiceLineTotal;
-    $invoiceLineTotal->setMonetaryValue(100.00);
-    $invoiceLineTotal->setCurrencyCode('EUR');
-    $request->setInvoiceLineTotal($invoiceLineTotal);
-
-    // Pickup date
-    $request->setPickupDate(new DateTime);
-
-    // Get data
-    $times = $timeInTransit->getTimeInTransit($request);
-
-	foreach($times->ServiceSummary as $serviceSummary) {
-		var_dump($serviceSummary);
-	}
-
-} catch (Exception $e) {
-    var_dump($e);
-}
-```
 
 <a name="epayinventory-class-parameters"></a>
-### Parameters
+### Parameters (COMING SOON)
 
- * `timeInTransitRequest` Mandatory. timeInTransitRequest Object with shipment details, see example above.
+<a name="epayinventory-class-example"></a>
+## EpayInventory Methods w/ default required params (COMING SOON)
 
 ## Change log
 

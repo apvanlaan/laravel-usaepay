@@ -12,8 +12,7 @@ class CategoryController extends Controller
 
 	public function __construct(Request $request){
 		$arr = $request->all();
-		$epayc = new EpayCategory();
-		$this->category = $epayc->new($arr);
+		$this->category = new EpayCategory($arr);
 	}
 	public function create(Request $request){
 			
@@ -36,10 +35,10 @@ class CategoryController extends Controller
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function get(Request $request){
-		
+	public function get($categorykey){
+		$this->category_key = $categorykey;
 		$res = $this->category->getCategory();
-		return json_encode($res);
+		return $res;
 	}
 	/**
 	 * [update description]

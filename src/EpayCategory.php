@@ -18,7 +18,7 @@ class EpayCategory extends Epay
 	    $category = $this;
         $params = $this->createParams();
 	    $res = $this->epay->get("/products/categories" . $params,$category);
-	    	return $res;
+    	return $res;
     }
 
     public function createCategory(){
