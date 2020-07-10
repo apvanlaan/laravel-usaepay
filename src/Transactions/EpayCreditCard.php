@@ -1,6 +1,7 @@
 <?php
 
 namespace Apvanlaan\UsaEpay\Transactions;
+
 use Apvanlaan\UsaEpay\Epay;
 
 class EpayCreditCard extends Epay
@@ -11,5 +12,4 @@ class EpayCreditCard extends Epay
     public Int $cvc;
     public String $avs_street;
     public String $avs_postalcode;
-    
 }

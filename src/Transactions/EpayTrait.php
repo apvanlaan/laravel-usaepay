@@ -1,6 +1,7 @@
 <?php
 
 namespace Apvanlaan\UsaEpay\Transactions;
+
 use Apvanlaan\UsaEpay\Epay;
 
 class EpayTrait extends Epay
@@ -11,5 +12,4 @@ class EpayTrait extends Epay
     public Bool $is_healthcare;
     public Bool $is_cash_advance;
     public Int $secure_collection;
-    
 }

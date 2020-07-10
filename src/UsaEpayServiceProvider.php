@@ -70,8 +70,6 @@ class UsaEpayServiceProvider extends ServiceProvider
         $this->app->singleton('epaytrait', function ($app) {
             return new Transactions\EpayTrait;
         });
-
-        
     }
 
     /**
@@ -81,9 +79,9 @@ class UsaEpayServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['usaepay','epaycustomer','epaytransaction','epaybatch','epayproduct','epaycategory','epayamountdetail','epaycreditcard','epaycustomeraddress','epaycustomfield','epaylineitem','epaytrait'];
+        return ['usaepay', 'epaycustomer', 'epaytransaction', 'epaybatch', 'epayproduct', 'epaycategory', 'epayamountdetail', 'epaycreditcard', 'epaycustomeraddress', 'epaycustomfield', 'epaylineitem', 'epaytrait'];
     }
-    
+
     /**
      * Console-specific booting.
      *
@@ -110,10 +108,10 @@ class UsaEpayServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/assets/js/components' => resource_path('js/components'),
         ], 'usaepay.creditcard');
-         $this->publishes([
+        $this->publishes([
             __DIR__.'/../resources/assets/sass' => resource_path('sass'),
         ], 'usaepay.creditcard');
-        
+
         // Publishing the translation files.
         /*$this->publishes([
             __DIR__.'/../resources/lang' => resource_path('lang/vendor/apvanlaan'),

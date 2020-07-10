@@ -1,11 +1,9 @@
 <?php
 
 namespace Apvanlaan\UsaEpay;
-use Apvanlaan\UsaEpay\Epay;
 
 class EpayBatch extends Epay
 {
-    
     public Int $limit;
     public Int $offset;
     public String $openedlt;
@@ -18,75 +16,86 @@ class EpayBatch extends Epay
     public String $closedge;
     public String $batch_key;
 
-    public function listBatches(){
-        
-	    $batch = $this;
+    public function listBatches()
+    {
+        $batch = $this;
         $params = $this->createParams();
 
-	    $res = $this->epay->get("/batches" . $params,$batch);
-	    	return $res;
+        $res = $this->epay->get('/batches'.$params, $batch);
+
+        return $res;
     }
 
-    public function currentBatch(){
-		$batch = $this;
-	    
-	    $res = $this->epay->get("/batches/current",$batch);
-    	return $res;
+    public function currentBatch()
+    {
+        $batch = $this;
+
+        $res = $this->epay->get('/batches/current', $batch);
+
+        return $res;
     }
 
-    public function retrieveBatch(){
-    	
-    	$required = $this->setRequired(['batch_key'],[]);
+    public function retrieveBatch()
+    {
+        $required = $this->setRequired(['batch_key'], []);
         $validated = $this->validate($required);
 
-        if($validated === true){
+        if ($validated === true) {
             $batch = $this;
-            $res = $this->epay->get("/batches/" . $this->batch_key,$batch);
+            $res = $this->epay->get('/batches/'.$this->batch_key, $batch);
+
             return $res;
-        }else{
-            throw new \Exception($validated,444);
+        } else {
+            throw new \Exception($validated, 444);
         }
     }
 
-    public function getCurrentBatchTransactions(){
-    	$batch = $this;
-	    $params = $this->createParams();
-	    $res = $this->epay->get("/batches/current/transactions" . $params,$batch);
-    	return $res;
+    public function getCurrentBatchTransactions()
+    {
+        $batch = $this;
+        $params = $this->createParams();
+        $res = $this->epay->get('/batches/current/transactions'.$params, $batch);
+
+        return $res;
     }
 
-    public function getTransactionsByBatch(){
-    	$required = $this->setRequired(['batch_key'],[]);
+    public function getTransactionsByBatch()
+    {
+        $required = $this->setRequired(['batch_key'], []);
         $validated = $this->validate($required);
         $params = $this->createParams();
-        if($validated === true){
+        if ($validated === true) {
             $batch = $this;
-            $res = $this->epay->get("/batches/" . $this->batch_key . "/transactions" . $params,$batch);
+            $res = $this->epay->get('/batches/'.$this->batch_key.'/transactions'.$params, $batch);
+
             return $res;
-        }else{
+        } else {
             //return ['error'=>$validated];
             throw new \Exception($validated);
         }
     }
 
-    public function closeBatch(){
-    	$required = $this->setRequired(['batch_key'],[]);
+    public function closeBatch()
+    {
+        $required = $this->setRequired(['batch_key'], []);
         $validated = $this->validate($required);
 
-        if($validated === true){
+        if ($validated === true) {
             $batch = $this;
-            $res = $this->epay->post("/batches/current/close",$batch);
+            $res = $this->epay->post('/batches/current/close', $batch);
+
             return $res;
-        }else{
+        } else {
             return ['error'=>$validated];
         }
     }
 
-    public function createParams(){
-        $arr = (array)$this;
-        $params = "";
-        foreach($arr as $key=>$value){
-            switch($key){
+    public function createParams()
+    {
+        $arr = (array) $this;
+        $params = '';
+        foreach ($arr as $key=>$value) {
+            switch ($key) {
                 case 'limit':
                 case 'offset':
                 case 'openedlt':
@@ -98,10 +107,10 @@ class EpayBatch extends Epay
                 case 'closedle':
                 case 'closedge':
                     $params .= "?$key=$value";
-                break;    
+                break;
             }
-            
         }
+
         return $params;
     }
 }

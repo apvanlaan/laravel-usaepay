@@ -1,11 +1,9 @@
 <?php
 
 namespace Apvanlaan\UsaEpay;
-use Apvanlaan\UsaEpay\Epay;
 
 class EpayTransaction extends Epay
 {
-   
     public String $command;
     public String $trankey;
     public String $refnum;
@@ -44,108 +42,118 @@ class EpayTransaction extends Epay
     public String $clerk;
     public String $clientip;
     public String $software;
-    
-    public function listAuthorized(){
+
+    public function listAuthorized()
+    {
         $transaction = $this;
-        $res = $this->epay->get("/transactions",$transaction);
+        $res = $this->epay->get('/transactions', $transaction);
+
         return $res;
         // https://secure.usaepay.com/api/v2/transactions?filters=@trantype_code
     }
-    public function getTransaction(){
+
+    public function getTransaction()
+    {
         $required = ['trankey'];
 
         $validated = $this->validate($required);
-        
-        if($validated === true){
+
+        if ($validated === true) {
             $key = $this->trankey;
             $transaction = $this;
-            
-            $res = $this->epay->get("/transactions/$key",$transaction);
-            return $res;
-        }else{
-            throw new \Exception($validated,444);
-        }
-        
 
+            $res = $this->epay->get("/transactions/$key", $transaction);
+
+            return $res;
+        } else {
+            throw new \Exception($validated, 444);
+        }
     }
 
-    public function createSale(){
-        
+    public function createSale()
+    {
         $this->command = 'sale';
 
-        $required = $this->setRequired(['amount'],['payment_key'=>'creditcard']);
+        $required = $this->setRequired(['amount'], ['payment_key'=>'creditcard']);
         $validated = $this->validate($required);
 
-        if($validated === true){
+        if ($validated === true) {
             $transaction = $this;
-            $res = $this->epay->post("/transactions",$transaction);
+            $res = $this->epay->post('/transactions', $transaction);
+
             return $res;
-        }else{
-            throw new \Exception($validated,444);
+        } else {
+            throw new \Exception($validated, 444);
         }
     }
 
-    public function createRefund(){
+    public function createRefund()
+    {
         $required = [];
         $this->command = 'refund';
-        if(!isset($this->refnum) && !isset($this->trankey)){
-            array_push($required,'amount');
-            array_push($required,'creditcard');
+        if (! isset($this->refnum) && ! isset($this->trankey)) {
+            array_push($required, 'amount');
+            array_push($required, 'creditcard');
         }
         $validated = $this->validate($required);
-        if($validated === true){
+        if ($validated === true) {
             $transaction = $this;
-            $res = $this->epay->post("/transactions",$transaction);
+            $res = $this->epay->post('/transactions', $transaction);
+
             return $res;
-        }else{
-            throw new \Exception($validated,444);
+        } else {
+            throw new \Exception($validated, 444);
         }
     }
 
-
-    public function createVoid(){
-        $required = $this->setRequired([],['trankey'=>'refnum','refnum'=>'trankey']);
+    public function createVoid()
+    {
+        $required = $this->setRequired([], ['trankey'=>'refnum', 'refnum'=>'trankey']);
         $this->command = 'void';
-        
+
         $validated = $this->validate($required);
-        if($validated === true){
+        if ($validated === true) {
             $transaction = $this;
-            $res = $this->epay->post("/transactions",$transaction);
+            $res = $this->epay->post('/transactions', $transaction);
+
             return $res;
-        }else{
-            throw new \Exception($validated,444);
+        } else {
+            throw new \Exception($validated, 444);
         }
     }
 
-    public function authorizeTransaction(){
+    public function authorizeTransaction()
+    {
         $this->command = 'authonly';
-        $required = $this->setRequired(['amount'],['payment_key'=>'creditcard']);
-        
+        $required = $this->setRequired(['amount'], ['payment_key'=>'creditcard']);
+
         $validated = $this->validate($required);
-        
-        if($validated === true){
+
+        if ($validated === true) {
             $transaction = $this;
-            
-            $res = $this->epay->post("/transactions",$transaction);
+
+            $res = $this->epay->post('/transactions', $transaction);
+
             return $res;
-        }else{
-            throw new \Exception($validated,444);
+        } else {
+            throw new \Exception($validated, 444);
         }
     }
 
-    public function captureTransaction(){
-        $this->command = "cc:capture:" . config('usaepay.capture_type');
-        $required = $this->setRequired([],['trankey'=>'refnum','refnum'=>'trankey']);
+    public function captureTransaction()
+    {
+        $this->command = 'cc:capture:'.config('usaepay.capture_type');
+        $required = $this->setRequired([], ['trankey'=>'refnum', 'refnum'=>'trankey']);
         $validated = $this->validate($required);
-        
-        if($validated === true){
+
+        if ($validated === true) {
             $transaction = $this;
 
-            $res = $this->epay->post("/transactions",$transaction);
+            $res = $this->epay->post('/transactions', $transaction);
+
             return $res;
-        }else{
-            throw new \Exception($validated,444);
+        } else {
+            throw new \Exception($validated, 444);
         }
     }
-
 }
