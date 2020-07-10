@@ -1,6 +1,7 @@
 <?php
 
 namespace Apvanlaan\UsaEpay\Transactions;
+
 use Apvanlaan\UsaEpay\Epay;
 
 class EpayAmountDetail extends Epay
@@ -12,5 +13,5 @@ class EpayAmountDetail extends Epay
     public Double $discount;
     public Double $shipping;
     public Double $duty;
-    public Bool $enable_partialauth;    
+    public Bool $enable_partialauth;
 }
