@@ -474,6 +474,6 @@ The USAePay REST API Package for Laravel is open-sourced software licensed under
 
 [link-packagist]: https://packagist.org/packages/apvanlaan/usaepay
 [link-downloads]: https://packagist.org/packages/apvanlaan/usaepay
-[link-travis]: https://travis-ci.org/apvanlaan/usaepay
+[link-travis]: https://travis-ci.org/github/apvanlaan/laravel-usaepay
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/apvanlaan
