@@ -462,7 +462,6 @@ Please see [contributing.md](contributing.md) for details and a todolist.
 ## Credits
 
 - [Aaron VanLaan][link-author]
-- [All Contributors][link-contributors]
 
 ## License
 
@@ -478,4 +477,3 @@ The USAePay REST API Package for Laravel is open-sourced software licensed under
 [link-travis]: https://travis-ci.org/apvanlaan/usaepay
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/apvanlaan
-[link-contributors]: ../../contributors
