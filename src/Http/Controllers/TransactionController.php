@@ -5,6 +5,7 @@ namespace Apvanlaan\UsaEpay\Http\Controllers;
 use Apvanlaan\UsaEpay\EpayTransaction;
 use Apvanlaan\UsaEpay\Transactions\EpayCreditCard;
 use Apvanlaan\UsaEpay\Transactions\EpayCustomerAddress;
+use Apvanlaan\UsaEpay\Transactions\EpayLineItem;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -26,6 +27,15 @@ class TransactionController extends Controller
             if ($request->shipping_address) {
                 $res = $this->setElement($request->billing_address, 'shipping');
                 $arr['shipping_address'] = $res;
+            }
+            if ($request->lineitems){
+                $lis = [];
+                foreach($request->lineitems as $lineitem){
+                    $res = $this->setElement($lineitem, 'lineitem');
+                    array_push($lis, $res);
+                }
+                $arr['lineitems'] = $lis;
+                
             }
             $this->transaction = new EpayTransaction($arr);
             $this->transaction->{'receipt-custemail'} = 'none';
@@ -104,6 +114,9 @@ class TransactionController extends Controller
             case 'billing':
             case 'shipping':
                 $element = new EpayCustomerAddress($params);
+            break;
+            case 'lineitem':
+                $element = new EpayLineItem($params);
             break;
         }
 
