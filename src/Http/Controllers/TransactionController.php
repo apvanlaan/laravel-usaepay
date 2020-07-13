@@ -28,14 +28,13 @@ class TransactionController extends Controller
                 $res = $this->setElement($request->billing_address, 'shipping');
                 $arr['shipping_address'] = $res;
             }
-            if ($request->lineitems){
+            if ($request->lineitems) {
                 $lis = [];
-                foreach($request->lineitems as $lineitem){
+                foreach ($request->lineitems as $lineitem) {
                     $res = $this->setElement($lineitem, 'lineitem');
                     array_push($lis, $res);
                 }
                 $arr['lineitems'] = $lis;
-                
             }
             $this->transaction = new EpayTransaction($arr);
             $this->transaction->{'receipt-custemail'} = 'none';
