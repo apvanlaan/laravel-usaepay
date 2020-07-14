@@ -32,7 +32,7 @@ class TransactionController extends Controller
                 $res = $this->setElement($request->amountdetail, 'amountdetail');
                 $arr['amount_detail'] = $res;
             }
-            if ($request->lineitems){
+            if ($request->lineitems) {
                 $lis = [];
                 foreach ($request->lineitems as $lineitem) {
                     $res = $this->setElement($lineitem, 'lineitem');
