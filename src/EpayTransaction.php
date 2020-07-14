@@ -33,8 +33,8 @@ class EpayTransaction extends Epay
     public Transactions\EpayCustomerAddress $billing_address;
     public Transactions\EpayCustomerAddress $shipping_address;
 
-    public Array $lineitems;
-    
+    public array $lineitems;
+
     public Transactions\EpayLineItem $lineitem;
 
     public Transactions\EpayCustomField $custom_fields;

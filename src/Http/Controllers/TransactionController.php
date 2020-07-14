@@ -34,12 +34,11 @@ class TransactionController extends Controller
             }
             if ($request->lineitems){
                 $lis = [];
-                foreach($request->lineitems as $lineitem){
+                foreach ($request->lineitems as $lineitem) {
                     $res = $this->setElement($lineitem, 'lineitem');
                     array_push($lis, $res);
                 }
                 $arr['lineitems'] = $lis;
-                
             }
             $this->transaction = new EpayTransaction($arr);
             $this->transaction->{'receipt-custemail'} = 'none';
