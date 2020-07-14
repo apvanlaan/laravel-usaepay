@@ -6,12 +6,12 @@ use Apvanlaan\UsaEpay\Epay;
 
 class EpayAmountDetail extends Epay
 {
-    public Double $subtotal;
-    public Double $tax;
+    public Float $subtotal;
+    public Float $tax;
     public Bool $nontaxable;
-    public Double $tip;
-    public Double $discount;
-    public Double $shipping;
-    public Double $duty;
+    public Float $tip;
+    public Float $discount;
+    public Float $shipping;
+    public Float $duty;
     public Bool $enable_partialauth;
 }

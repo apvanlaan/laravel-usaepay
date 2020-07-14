@@ -28,6 +28,10 @@ class TransactionController extends Controller
                 $res = $this->setElement($request->billing_address, 'shipping');
                 $arr['shipping_address'] = $res;
             }
+            if ($request->amountdetail) {
+                $res = $this->setElement($request->amountdetail, 'amountdetail');
+                $arr['amount_detail'] = $res;
+            }
             if ($request->lineitems){
                 $lis = [];
                 foreach($request->lineitems as $lineitem){
@@ -117,6 +121,9 @@ class TransactionController extends Controller
             break;
             case 'lineitem':
                 $element = new EpayLineItem($params);
+            break;
+            case 'amountdetail':
+                $element = new EpayAmountDetail($params);
             break;
         }
 
