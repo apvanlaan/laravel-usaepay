@@ -36,7 +36,9 @@ Project was created by, and is maintained by [Aaron VanLaan][link-author].
 8. [EpayInventory Class (COMING SOON)](#epayinventory-class)
     * [Parameters](#epayinventory-class-parameters)
     * [Methods](#epayinventory-class-example)
-
+9. [Examples] (#examples)
+    * [Example View] (#example-view)
+    * [Example Vue Component] (#example-vue)
 <a name="requirements"></a>
 ## Requirements
 
@@ -450,6 +452,261 @@ The EpayCategory Class handles the creation of the Category object and the assoc
 <a name="epayinventory-class-example"></a>
 ## EpayInventory Methods w/ default required params (COMING SOON)
 
+<a name="examples"></a>
+## Examples
+
+The following is an example of creating a View in Laravel that utilizes a Vue Component 
+
+<a name="example-view"></a>
+### Example View
+
+::: v-pre
+`<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.usaepay.com/js/v1/pay.js"></script>
+</head>
+<body>
+    <div id='app'>
+        <div class='col'>
+            <h2>Payment/Auth Form</h2>
+            <paymentform publickey={{config('usaepay.publickey')}}></paymentform>
+        </div>
+        <div class='col'>
+            <h2>Transaction List</h2>
+            <transactionlist></transactionlist>
+        </div>
+    </div>
+</body>
+<script src="{{ asset('js/app.js') }}"></script>
+</html>`
+:::
+
+<a name="example-vue"></a>
+### Example Vue Component
+
+::: v-pre
+`<template>
+    <div>
+        <form class='paymentForm' @submit.prevent='submitForm'>
+                <div class='form-group'>
+            <label for='saveCust'>Save Customer?</label>
+            <input type='checkbox' name='saveCust' v-model='saveCust' />
+            </div>
+                <div class='form-group'>
+            <label for='type'>Transaction Type</label>
+                <div class='form-group'>
+            <label>Authorization <input type='radio' value='auth' name='type' v-model='transaction.type' /></label>
+            </div>
+                <div class='form-group'>
+            <label>Sale <input type='radio' value='sale' name='type' v-model='transaction.type' /></label>
+            </div>
+            </div>
+                <div class='form-group'>
+            <label for='amount'>Amount : ${{transaction.amount}}</label>
+            </div>
+                <div class='form-group'>
+            <label for="email">Email</label>
+            <input type="email" v-model="transaction.email" required/>
+            </div>
+            <div id='shipping_address'>
+                <div class='form-group'>
+                    <label class='label' for="company">Company</label>
+                    <input type="text" name="company" v-model='transaction.shipping_address.company' />
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="firstname">First Name</label>
+                    <input type="text" name="firstname" v-model='transaction.shipping_address.firstname' />
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="lastname">Last Name</label>
+                    <input type="text" name="lastname" v-model='transaction.shipping_address.lastname' />
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="street">Address</label>
+                    <input type="text" name="street" v-model='transaction.shipping_address.street' required/>
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="street2">Apt / Building</label>
+                    <input type="text" name="street2" v-model='transaction.shipping_address.street2' />
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="city">City</label>
+                    <input type='text' name='city' v-model='transaction.shipping_address.city' required/>
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="state">State</label>
+                    <input type="text" name="state" v-model='transaction.shipping_address.state' required/>
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="postalcode">Zip</label>
+                    <input type="text" name="postalcode" v-model='transaction.shipping_address.postalcode' required/>
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="country">Country</label>
+                    <select name="country" v-model='transaction.shipping_address.country' required>
+                        <option value="Select Country">Select Country</option>
+                        <option value="US">US</option>
+                        <option value="CA">Canada</option>
+                    </select>
+                </div>
+                <div class='form-group'>
+                    <label class='label' for="phone">Phone#</label>
+                    <input type="text" name="phone" v-model='transaction.shipping_address.phone' />
+                    </div>
+            </div>
+            <div class='form-group'>
+            <label class='label' for='diffBilling'>Different Billing Address?</label>
+            <input type='checkbox' name='diffBilling' v-model='diffBilling'/>
+            </div>
+            <div v-if="diffBilling == true" id='billing_address'>
+                <div class='form-group'>
+                <label class='label' for="company">Company</label>
+                <input type="text" name="company" v-model='transaction.billing_address.company' /></div>
+                <div class='form-group'>
+                <label class='label' for="firstname">First Name</label>
+                <input type="text" name="firstname" v-model='transaction.billing_address.firstname' /></div>
+                <div class='form-group'>
+                <label class='label' for="lastname">Last Name</label>
+                <input type="text" name="lastname" v-model='transaction.billing_address.lastname' /></div>
+                <div class='form-group'>
+                <label class='label' for="street">Address</label>
+                <input type="text" name="street" v-model='transaction.billing_address.street' required/></div>
+                <div class='form-group'>
+                <label class='label' for="street2">Apt / Building</label>
+                <input type="text" name="street2" v-model='transaction.billing_address.street2' /></div>
+                <div class='form-group'>
+                <label class='label' for="city">City</label>
+                <input type='text' name='city' v-model='transaction.billing_address.city' required/></div>
+                <div class='form-group'>
+                <label class='label' for="state">State</label>
+                <input type="text" name="state" v-model='transaction.billing_address.state' required/></div>
+                <div class='form-group'>
+                <label class='label' for="postalcode">Zip</label>
+                <input type="text" name="postalcode" v-model='transaction.billing_address.postalcode' required/></div>
+                <div class='form-group'>
+                <label class='label' for="country">Country</label>
+                <select name="country" v-model='transaction.billing_address.country' required>
+                    <option value="Select Country">Select Country</option>
+                    <option value="US">US</option>
+                    <option value="CA">Canada</option>
+                </select>
+                </div>
+                <div class='form-group'>
+                <label for="phone">Phone#</label>
+                <input type="text" name="phone" v-model='transaction.billing_address.phone' /></div>              
+            </div>
+            <creditcard ref='cc' :publickey=publickey></creditcard>
+            <button type='submit'>Submit</button>
+        </form>
+    <div>Results : <pre>{{results}}</pre></div>
+    </div>
+</template>
+<script>
+    export default {
+        props: ['publickey'],
+        data() {
+            return {
+                transaction:{
+                    billing_address:{
+                        company:'',
+                        firstname:'',
+                        lastname:'',
+                        street:'',
+                        street2:'',
+                        city:'',
+                        state:'',
+                        postalcode:'',
+                        country:'',
+                        phone:'',
+                    },
+                    shipping_address:{
+                        company:'',
+                        firstname:'',
+                        lastname:'',
+                        street:'',
+                        street2:'',
+                        city:'',
+                        state:'',
+                        postalcode:'',
+                        country:'',
+                        phone:'',
+                    },
+                    lineitems:[
+                        {
+                            name: "Test1",
+                            cost: 3.50,
+                            qty: 2,
+                            description: "This is the first test item."
+                        },
+                        {
+                            name: "Test2",
+                            cost: 3.75,
+                            qty: 1,
+                            description: "This is the second test item."
+                        }
+                    ],
+                    email:'',
+                    type:'auth',
+                    amount:3.5,                                
+                },
+                diffBilling:false,
+                results:'',
+                results_output:'',
+                payment_key:'',
+                saveCust:false,
+            }
+        },
+        methods: {
+            submitForm(){
+                var self = this;
+                self.$refs.cc.errormsg = '';
+                var client = this.$refs.cc.client;
+                var paymentCard = this.$refs.cc.paymentCard;
+                if(!self.diffBilling){
+                    self.transaction.billing_address = self.transaction.shipping_address;
+                }
+                client.getPaymentKey(paymentCard).then(result => {
+                    if (result.error) {                       
+                        self.$refs.cc.errormsg = result.error.message;
+                    } else {
+                        // do something with your payment key
+                        self.payment_key = result;
+                    }
+                    self.transaction.payment_key = self.payment_key;
+                    if(self.saveCust == true){
+                        self.transaction.save_customer = 1;
+                    }
+                    axios.post('api/epay/transaction/' + self.transaction.type,self.transaction).then(function(response){
+                        self.results = response.data;
+                        if(self.saveCust == true){
+                            axios.get('api/epay/customer/get/' + response.data.customer.custkey).then(function(customer){
+                                self.results.customer = customer.data;                     
+                            })
+                        }
+                         self.results_output = JSON.stringify(response.data,null,2); 
+                    })
+                    .catch(function(error){
+                        console.log(error.response.data.message);
+                        self.$refs.cc.errormsg = "An error has occurred.  Please check the form and try again.\r\n Error Message: " + error.response.data.message;
+                    });
+                });                
+            },
+        },
+        watch:{   
+        },
+        computed: {  
+        },
+        mounted: function(){
+        }
+    }
+</script>
+<style>
+.paymentForm{width:300px;}
+</style>`
+:::
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
