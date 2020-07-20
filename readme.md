@@ -460,8 +460,9 @@ The following is an example of creating a View in Laravel that utilizes a Vue Co
 <a name="example-view"></a>
 ### Example View
 
-::: v-pre
-`<!DOCTYPE html>
+
+```
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -481,14 +482,15 @@ The following is an example of creating a View in Laravel that utilizes a Vue Co
     </div>
 </body>
 <script src="{{ asset('js/app.js') }}"></script>
-</html>`
-:::
+</html>
+```
 
 <a name="example-vue"></a>
 ### Example Vue Component
 
-::: v-pre
-`<template>
+
+```
+<template>
     <div>
         <form class='paymentForm' @submit.prevent='submitForm'>
                 <div class='form-group'>
@@ -705,8 +707,9 @@ The following is an example of creating a View in Laravel that utilizes a Vue Co
 </script>
 <style>
 .paymentForm{width:300px;}
-</style>`
-:::
+</style>
+```
+
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
