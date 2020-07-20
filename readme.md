@@ -36,9 +36,9 @@ Project was created by, and is maintained by [Aaron VanLaan][link-author].
 8. [EpayInventory Class (COMING SOON)](#epayinventory-class)
     * [Parameters](#epayinventory-class-parameters)
     * [Methods](#epayinventory-class-example)
-9. [Examples] (#examples)
-    * [Example View] (#example-view)
-    * [Example Vue Component] (#example-vue)
+9. [Examples](#examples)
+    * [Example View](#example-view)
+    * [Example Vue Component](#example-vue)
 <a name="requirements"></a>
 ## Requirements
 
