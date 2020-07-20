@@ -6,6 +6,7 @@ use Apvanlaan\UsaEpay\EpayTransaction;
 use Apvanlaan\UsaEpay\Transactions\EpayCreditCard;
 use Apvanlaan\UsaEpay\Transactions\EpayCustomerAddress;
 use Apvanlaan\UsaEpay\Transactions\EpayLineItem;
+use Apvanlaan\UsaEpay\Transactions\EpayAmountDetail;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
