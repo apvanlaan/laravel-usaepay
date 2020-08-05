@@ -41,12 +41,12 @@ class TransactionController extends Controller
                 }
                 $arr['lineitems'] = $lis;
             }
-            if($request->keyset){
+            if ($request->keyset) {
                 unset($arr['keyset']);
 
-                $this->transaction = new EpayTransaction($arr,$request->keyset);
-            }else{
-                $this->transaction = new EpayTransaction($arr);    
+                $this->transaction = new EpayTransaction($arr, $request->keyset);
+            } else {
+                $this->transaction = new EpayTransaction($arr);
             }
             $this->transaction->{'receipt-custemail'} = 'none';
             if ($this->transaction instanceof EpayTransaction) {

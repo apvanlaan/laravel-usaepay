@@ -14,18 +14,17 @@ class UsaEpay
 
     public function __construct($keyset)
     {
-        if($keyset == ''){
+        if ($keyset == '') {
             $api_key = config('usaepay.default.apikey');
             $api_pin = config('usaepay.default.pin');
             $sub = config('usaepay.default.epaysub');
             $end = config('usaepay.default.endpoint');
-        }else{
+        } else {
             $api_key = config("usaepay.$keyset.apikey");
             $api_pin = config("usaepay.$keyset.pin");
             $sub = config("usaepay.$keyset.epaysub");
             $end = config("usaepay.$keyset.endpoint");
         }
-        
 
         $seed = substr(hash('sha256', rand()), 10, 25);
         $prehash = $api_key.$seed.$api_pin;

@@ -19,13 +19,13 @@ class BatchController extends Controller
         if ($request->offset) {
             $arr['offset'] = $arr['offset'] * 1;
         }
-        if($request->keyset){
-                unset($arr['keyset']);
+        if ($request->keyset) {
+            unset($arr['keyset']);
 
-                $this->transaction = new EpayBatch($arr,$request->keyset);
-            }else{
-                $this->transaction = new EpayBatch($arr);    
-            }
+            $this->transaction = new EpayBatch($arr, $request->keyset);
+        } else {
+            $this->transaction = new EpayBatch($arr);
+        }
 
         if (is_string($this->batch)) {
             throw new \Exception($test);
