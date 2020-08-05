@@ -6,7 +6,7 @@ class Epay
 {
     public $epay;
 
-    public function __construct($params = '', $apikey = '', $apipin = '', $sub = '', $end = '')
+    public function __construct($params = '',$keyset = '')
     {
         if ($params != '') {
             if (is_array($params) || is_object($params)) {
@@ -17,7 +17,8 @@ class Epay
                 return 'Must use object or array to create new entity';
             }
         }
-        $this->epay = new UsaEpay($apikey, $apipin, $sub, $end);
+
+        $this->epay = new UsaEpay($keyset);
     }
 
     public function validate($rules)

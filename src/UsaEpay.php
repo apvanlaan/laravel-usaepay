@@ -12,23 +12,20 @@ class UsaEpay
     public $available_subdomains;
     public $curl;
 
-    public function __construct($api_key = '', $api_pin = '', $sub = '', $end = '')
+    public function __construct($keyset)
     {
-        if ($api_key == '') {
-            $api_key = config('usaepay.apikey');
+        if($keyset == ''){
+            $api_key = config('usaepay.default.apikey');
+            $api_pin = config('usaepay.default.pin');
+            $sub = config('usaepay.default.epaysub');
+            $end = config('usaepay.default.endpoint');
+        }else{
+            $api_key = config("usaepay.$keyset.apikey");
+            $api_pin = config("usaepay.$keyset.pin");
+            $sub = config("usaepay.$keyset.epaysub");
+            $end = config("usaepay.$keyset.endpoint");
         }
-
-        if ($api_pin == '') {
-            $api_pin = config('usaepay.pin');
-        }
-
-        if ($sub == '') {
-            $sub = config('usaepay.epaysub');
-        }
-
-        if ($end == '') {
-            $end = config('usaepay.endpoint');
-        }
+        
 
         $seed = substr(hash('sha256', rand()), 10, 25);
         $prehash = $api_key.$seed.$api_pin;

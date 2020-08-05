@@ -12,7 +12,13 @@ class ProductController extends Controller
     public function __construct(Request $request)
     {
         $arr = $request->all();
-        $this->product = new EpayProduct($arr);
+        if($request->keyset){
+                unset($arr['keyset']);
+
+                $this->transaction = new EpayProduct($arr,$request->keyset);
+            }else{
+                $this->transaction = new EpayProduct($arr);    
+            }
     }
 
     public function create(Request $request)

@@ -12,7 +12,13 @@ class CustomerController extends Controller
     public function __construct(Request $request)
     {
         $arr = $request->all();
-        $this->customer = new EpayCustomer($arr);
+        if($request->keyset){
+                unset($arr['keyset']);
+
+                $this->transaction = new EpayCustomer($arr,$request->keyset);
+            }else{
+                $this->transaction = new EpayCustomer($arr);    
+            }
     }
 
     public function createCustomer(Request $request)

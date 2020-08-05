@@ -12,7 +12,13 @@ class CategoryController extends Controller
     public function __construct(Request $request)
     {
         $arr = $request->all();
-        $this->category = new EpayCategory($arr);
+        if($request->keyset){
+                unset($arr['keyset']);
+
+                $this->transaction = new EpayCategory($arr,$request->keyset);
+            }else{
+                $this->transaction = new EpayCategory($arr);    
+            }
     }
 
     public function create(Request $request)
