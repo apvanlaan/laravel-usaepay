@@ -5,8 +5,8 @@ namespace Apvanlaan\UsaEpay;
 class Epay
 {
     public $epay;
-
-    public function __construct($params = '', $keyset = '')
+    public $keyset;
+    public function __construct($params = '',$keyset = '')
     {
         if ($params != '') {
             if (is_array($params) || is_object($params)) {
@@ -17,7 +17,7 @@ class Epay
                 return 'Must use object or array to create new entity';
             }
         }
-
+        $this->keyset = $keyset;
         $this->epay = new UsaEpay($keyset);
     }
 

@@ -144,7 +144,7 @@ class EpayTransaction extends Epay
 
     public function captureTransaction()
     {
-        $this->command = 'cc:capture:'.config('usaepay.capture_type');
+        $this->command = 'cc:capture:'.config("usaepay." . $this->keyset . ".capture_type");
         $required = $this->setRequired([], ['trankey'=>'refnum', 'refnum'=>'trankey']);
         $validated = $this->validate($required);
 
