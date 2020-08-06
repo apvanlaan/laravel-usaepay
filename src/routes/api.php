@@ -23,6 +23,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'api'], function () {
     Route::post('/epay/transaction/auth', [TransactionController::class, 'auth'])->name('transaction.auth');
     Route::post('/epay/transaction/void', [TransactionController::class, 'void'])->name('transaction.void');
     Route::post('/epay/transaction/sale', [TransactionController::class, 'sale'])->name('transaction.sale');
+    Route::post('/epay/transaction/refund', [TransactionController::class, 'refund'])->name('transaction.refund');
 
     // Batches
     Route::get('/epay/batch/list', [BatchController::class, 'list'])->name('batch.list');
