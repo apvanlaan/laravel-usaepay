@@ -6,7 +6,8 @@ class Epay
 {
     public $epay;
     public $keyset;
-    public function __construct($params = '',$keyset = '')
+
+    public function __construct($params = '', $keyset = '')
     {
         if ($params != '') {
             if (is_array($params) || is_object($params)) {
